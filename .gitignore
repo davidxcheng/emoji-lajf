@@ -1,0 +1,6 @@
+src/*.js
+src/main.ts
+
+node_modules/
+.vscode/
+
