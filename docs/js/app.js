@@ -55,7 +55,7 @@ function createScoreboardMarkup(data) {
 
       quantity += activity.unit ? ` ${activity.unit}` : "";
 
-      markup += `<div>${activity.glyph} <small>${quantity}</small></div>`;
+      markup += `<div>${activity.glyph}<small>${quantity}</small></div>`;
     }
   }
 

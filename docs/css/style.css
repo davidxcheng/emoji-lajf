@@ -25,17 +25,30 @@ h1 {
 }
 
 #scoreboard > div {
-  font-size: 28px;
+  display: flex;
+  align-items: center;
+  font-size: 22px;
 }
 
-#calendar {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: stretch;
-  margin: 0 auto;
-  max-width: 652px;
-  max-height: 87vh;
+#scoreboard > div > small {
+  letter-spacing: -1px;
+  margin-left: 3px;
+}
+
+@media (min-width: 652px) {
+  #scoreboard > div {
+    font-size: 28px;
+  }
+
+  #calendar {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 auto;
+    max-width: 652px;
+    max-height: 87vh;
+  }
 }
 
 #calendar > div {

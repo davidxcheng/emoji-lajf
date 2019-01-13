@@ -167,6 +167,10 @@
       "date": "2019-01-13",
       "activity": "tennis",
       "quantity": 2
+    },
+    {
+      "date": "2019-01-13",
+      "activity": "code"
     }
   ]
 }
