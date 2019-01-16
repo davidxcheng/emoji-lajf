@@ -1,26 +1,4 @@
 {
-  "icons": {
-    "code": {
-      "type": "glyph",
-      "glyph": "👨🏻‍💻"
-    },
-    "tennis": {
-      "type": "glyph",
-      "glyph": "🎾"
-    },
-    "gym": {
-      "type": "glyph",
-      "glyph": "🏋🏽‍♂️"
-    },
-    "running": {
-      "type": "glyph",
-      "glyph": "🏃🏾‍♂️"
-    },
-    "earlybird": {
-      "type": "glyph",
-      "glyph": "⏱"
-    }
-  },
   "activities": [
     {
       "name": "tennis",
@@ -83,7 +61,8 @@
     },
     {
       "date": "2019-01-02",
-      "activity": "gym"
+      "activity": "gym",
+      "quantity": 1
     },
     {
       "date": "2019-01-03",
@@ -92,15 +71,18 @@
     },
     {
       "date": "2019-01-03",
-      "activity": "code"
+      "activity": "code",
+      "quantity": 1
     },
     {
       "date": "2019-01-04",
-      "activity": "gym"
+      "activity": "gym",
+      "quantity": 1
     },
     {
       "date": "2019-01-04",
-      "activity": "code"
+      "activity": "code",
+      "quantity": 1
     },
     {
       "date": "2019-01-05",
@@ -109,7 +91,8 @@
     },
     {
       "date": "2019-01-05",
-      "activity": "code"
+      "activity": "code",
+      "quantity": 1
     },
     {
       "date": "2019-01-06",
@@ -118,11 +101,13 @@
     },
     {
       "date": "2019-01-06",
-      "activity": "code"
+      "activity": "code",
+      "quantity": 1
     },
     {
       "date": "2019-01-07",
-      "activity": "earlybird"
+      "activity": "earlybird",
+      "quantity": 1
     },
     {
       "date": "2019-01-07",
@@ -131,19 +116,23 @@
     },
     {
       "date": "2019-01-07",
-      "activity": "code"
+      "activity": "code",
+      "quantity": 1
     },
     {
       "date": "2019-01-08",
-      "activity": "earlybird"
+      "activity": "earlybird",
+      "quantity": 1
     },
     {
       "date": "2019-01-09",
-      "activity": "earlybird"
+      "activity": "earlybird",
+      "quantity": 1
     },
     {
       "date": "2019-01-10",
-      "activity": "earlybird"
+      "activity": "earlybird",
+      "quantity": 1
     },
     {
       "date": "2019-01-10",
@@ -152,7 +141,8 @@
     },
     {
       "date": "2019-01-11",
-      "activity": "earlybird"
+      "activity": "earlybird",
+      "quantity": 1
     },
     {
       "date": "2019-01-12",
@@ -161,7 +151,8 @@
     },
     {
       "date": "2019-01-12",
-      "activity": "gym"
+      "activity": "gym",
+      "quantity": 1
     },
     {
       "date": "2019-01-13",
@@ -170,7 +161,33 @@
     },
     {
       "date": "2019-01-13",
-      "activity": "code"
+      "activity": "code",
+      "quantity": 1
+    },
+    {
+      "date": "2019-01-14",
+      "activity": "earlybird",
+      "quantity": 1
+    },
+    {
+      "date": "2019-01-14",
+      "activity": "running",
+      "quantity": 2
+    },
+    {
+      "date": "2019-01-15",
+      "activity": "earlybird",
+      "quantity": 1
+    },
+    {
+      "date": "2019-01-16",
+      "activity": "earlybird",
+      "quantity": 1
+    },
+    {
+      "date": "2019-01-16",
+      "activity": "code",
+      "quantity": 1
     }
   ]
 }

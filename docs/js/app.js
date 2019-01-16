@@ -42,11 +42,7 @@ function createScoreboardMarkup(data) {
     return acc;
   }, {});
 
-  data.log.forEach(log => {
-    summary[log.activity].quantity += summary[log.activity].isQuantifiable
-      ? log.quantity
-      : 1;
-  });
+  data.log.forEach(log => summary[log.activity].quantity += log.quantity);
 
   for (const prop in summary) {
     if (summary.hasOwnProperty(prop)) {
@@ -66,11 +62,21 @@ function createCalendarDateMarkup(date, data) {
   var dayOfWeek = date.getDay();
   var day = date.getDate();
   var isSabbath = dayOfWeek === 0;
-  var dateAsIso = date.toISOString().substring(0, 10)
+  var dateAsIso = date.toISOString().substring(0, 10);
+
+  // TODO: Move this so it's not done n times
+  var icons = data.activities.reduce((acc, curr) => {
+    if (!acc[curr.name]) {
+      acc[curr.name] = {
+        glyph: curr.icon.glyph
+      }
+    }
+    return acc;
+  }, {});
 
   var activities = data.log.reduce((acc, curr) => {
     if (dateAsIso === curr.date) {
-      acc += data.icons[curr.activity].glyph;
+      acc += icons[curr.activity].glyph;
     }
 
     return acc;
