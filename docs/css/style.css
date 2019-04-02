@@ -56,11 +56,21 @@ h1 {
   padding: 4px;
 }
 
+.date-container {
+  border-bottom: 1px solid gray;
+}
+
 .date {
   display: flex;
   align-items: center;
   cursor: pointer;
-  border-bottom: 1px solid gray;
+}
+
+.activity-details > ul {
+  list-style-type: none;
+  text-align: left;
+  padding-left: 35px;
+  margin: 0;
 }
 
 .dayOfMonth {
