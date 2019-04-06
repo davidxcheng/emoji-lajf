@@ -61,20 +61,20 @@ function createScoreboardMarkup(data) {
   return markup;
 }
 
-function createCalendarDateMarkup(date, data) {
+function createCalendarDateMarkup(date, log) {
   var dayOfWeek = date.getDay();
   var day = date.getDate();
   var isSabbath = dayOfWeek === 0;
   var dateAsIso = date.toISOString().substring(0, 10);
 
-  var activities = data.reduce((acc, curr) => {
-    if (dateAsIso === curr.date) {
-      var activity = _activities[curr.activity];
-      acc += activity.glyph;
+  var activitiesMarkup = log.reduce((acc, logEntry) => {
+    if (dateAsIso === logEntry.date) {
+      var activity = _activities[logEntry.activity];
+      acc += createLogEntryMarkup(activity, logEntry);
     }
 
     return acc;
-  }, "")
+  }, "");
 
   return `
     <div class="date-container" data-date='${dateAsIso}'>
@@ -83,26 +83,17 @@ function createCalendarDateMarkup(date, data) {
         <small class="day ${isSabbath ? 'sabbath' : ''}">
           ${days[dayOfWeek]}
         </small>
-        <span>${activities}</span>
+        <span>${activitiesMarkup}</span>
       </div>
-      <div class="activity-details"></div>
     </div>`;
 }
 
-function createActivityDetailsMarkup(activities) {
-  var x = activities.reduce((acc, curr) => {
-    var quantity = `${curr.quantity} ${_activities[curr.activity].unit}`;
+function createLogEntryMarkup(activity, logEntry) {
+  if (activity.isBinary) {
+    return `<span class="log-entry">${activity.glyph}</span>`;
+  }
 
-    acc += `
-      <li>${_activities[curr.activity].glyph} ${quantity}</li>
-    `;
-
-    return acc;
-  }, "");
-
-  return `
-    <ul>${x}</ul>
-  `;
+  return `<span class="log-entry">${activity.glyph}<small class="quantity">${logEntry.quantity} ${activity.unit}</small></span>`;
 }
 
 function render(month, data) {
@@ -138,9 +129,6 @@ function render(month, data) {
       } else {
         // Toggle activity details
         console.log('Toggle activity details')
-        var elActivityDetails = elDateContent.getElementsByClassName("activity-details")[0];
-
-        elActivityDetails.innerHTML = createActivityDetailsMarkup(entries);
       }
     }
   });
@@ -184,7 +172,7 @@ async function fetchData(month) {
     if (!acc[curr.name]) {
       acc[curr.name] = {
         glyph: curr.icon.glyph,
-        isBinary: curr.isBinary,
+        isBinary: curr.settings.isBinary,
         unit: curr.settings.isBinary ? "" : curr.settings.unit
       }
     }

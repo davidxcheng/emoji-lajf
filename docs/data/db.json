@@ -568,6 +568,16 @@
       "date": "2019-04-03",
       "activity": "code",
       "quantity": 1
+    },
+    {
+      "date": "2019-04-05",
+      "activity": "running",
+      "quantity": 4
+    },
+    {
+      "date": "2019-04-05",
+      "activity": "gym",
+      "quantity": 1
     }
   ]
 }
