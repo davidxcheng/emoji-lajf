@@ -578,6 +578,21 @@
       "date": "2019-04-05",
       "activity": "gym",
       "quantity": 1
+    },
+    {
+      "date": "2019-04-06",
+      "activity": "running",
+      "quantity": 3
+    },
+    {
+      "date": "2019-04-06",
+      "activity": "gym",
+      "quantity": 1
+    },
+    {
+      "date": "2019-04-06",
+      "activity": "code",
+      "quantity": 1
     }
   ]
 }

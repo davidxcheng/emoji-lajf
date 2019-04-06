@@ -2,24 +2,27 @@
 
 //import calendarDateMarkupComposer from "./calendarDateMarkupComposer.js";
 
-var elTitle = document.getElementById("title");
+var elTitleText = document.getElementById("title-text");
+var elPrevMonth = document.getElementById("prev-month");
+var elNextMonth = document.getElementById("next-month");
 var elScoreboard = document.getElementById("scoreboard");
 var elCalendar = document.getElementById("calendar");
 var _activities = [];
 
 var months = [
-  { name: "January", numberOfDays: 31 },
-  { name: "February", numberOfDays: 28 },
-  { name: "March", numberOfDays: 31 },
-  { name: "April", numberOfDays: 30 },
-  { name: "May", numberOfDays: 31 },
-  { name: "June", numberOfDays: 30 },
-  { name: "July", numberOfDays: 31 },
-  { name: "August", numberOfDays: 31 },
-  { name: "September", numberOfDays: 30 },
-  { name: "October", numberOfDays: 31 },
-  { name: "November", numberOfDays: 30 },
-  { name: "December", numberOfDays: 31 }
+  {}, // This app doesn't use zero-based value for month
+  { name: "January", numberOfDays: 31, mm: "01" },
+  { name: "February", numberOfDays: 28, mm: "02" },
+  { name: "March", numberOfDays: 31, mm: "03" },
+  { name: "April", numberOfDays: 30, mm: "04" },
+  { name: "May", numberOfDays: 31, mm: "05" },
+  { name: "June", numberOfDays: 30, mm: "06" },
+  { name: "July", numberOfDays: 31, mm: "07" },
+  { name: "August", numberOfDays: 31, mm: "08" },
+  { name: "September", numberOfDays: 30, mm: "09" },
+  { name: "October", numberOfDays: 31, mm: "10" },
+  { name: "November", numberOfDays: 30, mm: "11" },
+  { name: "December", numberOfDays: 31, mm: "12" }
 ];
 
 var days = [
@@ -96,14 +99,25 @@ function createLogEntryMarkup(activity, logEntry) {
   return `<span class="log-entry">${activity.glyph}<small class="quantity">${logEntry.quantity} ${activity.unit}</small></span>`;
 }
 
-function render(month, data) {
-  elTitle.innerHTML = `${months[month.month].name} ${month.year}`;
-  elScoreboard.innerHTML = createScoreboardMarkup(data);
+function render(calendarPage, logEntries) {
+  var selectedMonth = months[calendarPage.month];
+
+  elTitleText.innerText = `${selectedMonth.name} ${calendarPage.year}`;
+  elTitleText.dataset.year = calendarPage.year;
+  elTitleText.dataset.month = selectedMonth.mm;
+
+  window.history.pushState(
+    { calendarPage },
+    "calendarPage",
+    `#${calendarPage.year}/${(calendarPage.month).toString().padStart(2, '0')}`
+  );
+
+  elScoreboard.innerHTML = createScoreboardMarkup(logEntries);
   let outputMarkup = "";
 
-  for (var day = 1; day <= months[month.month].numberOfDays; day++) {
-    var currentDate = new Date(month.year, month.month, day, 12);
-    outputMarkup += createCalendarDateMarkup(currentDate, data)
+  for (var day = 1; day <= selectedMonth.numberOfDays; day++) {
+    var currentDate = new Date(calendarPage.year, calendarPage.month - 1, day, 12);
+    outputMarkup += createCalendarDateMarkup(currentDate, logEntries)
   }
 
   elCalendar.innerHTML = outputMarkup;
@@ -126,9 +140,6 @@ function render(month, data) {
       if (!entries.length) {
         // Show add UI
         console.log('Show add UI')
-      } else {
-        // Toggle activity details
-        console.log('Toggle activity details')
       }
     }
   });
@@ -148,23 +159,22 @@ window.addEventListener("load", async () => {
 
   if (requestedMonth) {
     var yyyyMM = requestedMonth[0];
-    var year = parseInt(yyyyMM.slice(0, 4));
-    var month = parseInt(yyyyMM.slice(-2));
-    selectedDate = new Date(year, (month - 1), 15);
+    var yyyy = parseInt(yyyyMM.slice(0, 4));
+    var mm = parseInt(yyyyMM.slice(-2));
+    selectedDate = new Date(yyyy, (mm - 1), 15);
   }
 
-  var month = {
+  var calendarPage = {
     year: selectedDate.getFullYear(),
-    month: selectedDate.getMonth()
+    month: selectedDate.getMonth() + 1
   };
 
-  window.history.pushState({ month }, "Month", `#${month.year}/${(month.month + 1).toString().padStart(2, '0')}`);
-  var data = await fetchData(month);
+  var logEntries = await fetchData(calendarPage);
 
-  render(month, data);
+  render(calendarPage, logEntries);
 });
 
-async function fetchData(month) {
+async function fetchData(calendarPage) {
   var response = await fetch('data/db.json');
   var data = await response.json();
 
@@ -179,15 +189,27 @@ async function fetchData(month) {
     return acc;
   }, {});
 
-  var yyyyMM = `${month.year}-${(month.month + 1).toString().padStart(2, "0")}`;
+  var yyyyMM = `${calendarPage.year}-${(calendarPage.month).toString().padStart(2, "0")}`;
   var logEntries = data.log.filter(entry => entry.date.startsWith(yyyyMM));
 
   return logEntries;
 }
 
+elPrevMonth.addEventListener("click", async e => await loadMonth(-1));
+elNextMonth.addEventListener("click", async e => await loadMonth(1));
+
+async function loadMonth(step) {
+  var year = parseInt(elTitleText.dataset.year);
+  var month = parseInt(elTitleText.dataset.month) + step;
+  var logEntries = await fetchData({ year, month });
+
+  render({ year, month }, logEntries);
+}
+
 window.addEventListener("popstate", async e => {
   if (e.state) {
-    var data = await fetchData(e.state.month);
-    render(month, data);
+    var calendarPage = e.state.calendarPage;
+    var logEntries = await fetchData(calendarPage);
+    render(calendarPage, logEntries);
   }
 });

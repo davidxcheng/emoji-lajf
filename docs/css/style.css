@@ -11,7 +11,25 @@ body {
 }
 
 h1 {
+  position: relative;
   margin: 12px 0;
+}
+
+.z {
+  position: absolute;
+  display: inline-block;
+  width: 50%;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+#prev-month {
+  left: 0;
+}
+
+#next-month {
+  right: 0;
 }
 
 #scoreboard {
